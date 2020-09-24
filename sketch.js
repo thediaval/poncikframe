@@ -1,68 +1,80 @@
-let input;
-let img;
-
-let isSubInput;
+let pg;
+let pictureSize = 1000;
 
 let frame;
+let userProfilePicture = {
+  x: 0,
+  y: 0,
+  picture: null,
+  dragging: false
+};
 
-let canvas;
+let offsetX;
+let offsetY;
+
+let ratio;
 
 function setup() {
-  canvas = createCanvas(1000, 1000);
-  
-  userProfilePicture = createFileInput(handleFile);
-  userProfilePicture.elt.id = "userProfilePicture";
+  let cnv = createCanvas(340, 340);
+  cnv.parent('canvasContainer');
+  cnv.mousePressed(canvasPressed);
+  cnv.mouseReleased(canvasReleased);
 
-  isSubInput = createCheckbox("Takipçiyim", false);
-  isSubInput.changed(checkboxCheckedEvent);
+  pg = createGraphics(pictureSize, pictureSize);
+
+  let fileInput = createFileInput(handleFileInput);
+  fileInput.parent(document.getElementById('fileInputContainer'));
 
   frame = createImg('frames/follower.png', 'Frame');
   frame.hide();
 
-  let downloadButton = createButton('İndir');
-  downloadButton.mousePressed(Download);
-
-  let mainContainer = document.getElementById('main');
-  let controlContainer = document.getElementById('controls');
-
-  canvas.parent(mainContainer);
-  frame.parent(mainContainer);
-  userProfilePicture.parent(controlContainer);
-  isSubInput.parent(controlContainer);
-  downloadButton.parent(controlContainer);
-
-  // userProfilePicture.position(50, 50);
-  // isSubInput.position(50, 100);
-  // downloadButton.position(50, 150);
+  ratio = pictureSize / width;
 }
 
-function Download() {
-  save(canvas, isSubInput.checked() ? 'poncikbruiser_sub.png' : 'poncikbruiser_follower.png');
+function canvasPressed() {
+  userProfilePicture.dragging = true;
+
+  offsetX = userProfilePicture.x - (mouseX * ratio);
+  offsetY = userProfilePicture.y - (mouseY * ratio);
 }
 
-function checkboxCheckedEvent() {
-  frame.remove();
-  frame = createImg(isSubInput.checked() ? 'frames/subscriber.png' : 'frames/follower.png', 'Frame');
-  let label = document.getElementsByTagName('label')[1];
-  label.innerHTML = isSubInput.checked() ? 'Aboneyim' : 'Takipçiyim';
-  frame.hide();
+function canvasReleased() {
+  userProfilePicture.dragging = false;
 }
 
-function draw() {    
+function draw() {
   clear();
+  pg.background('#F3F3F3');
 
-  if (img) {
-    image(img, 115, 115, 770, 770);
+  if(userProfilePicture.dragging) {
+    userProfilePicture.x = (mouseX * ratio) + offsetX;
+    userProfilePicture.y = (mouseY * ratio) + offsetY;
   }
-  image(frame, 0, 0, width, height);
+  
+  if (userProfilePicture.picture) {
+    let heightRatio = userProfilePicture.picture.height / userProfilePicture.picture.width;
+    let newHeight = pictureSize * heightRatio;
+    
+    pg.image(userProfilePicture.picture, userProfilePicture.x, userProfilePicture.y, pictureSize, newHeight);
+  }
+  pg.image(frame, 0, 0, pictureSize, pictureSize);
+
+  image(pg, 0, 0, width, height);
 }
 
-function handleFile(file) {
-  print(file);
-  if (file.type === 'image') {
-    img = createImg(file.data, '');
-    img.hide();
-  } else {
-    img = null;
-  }
+function changeFrame(status) {
+  frame = createImg(status ? 'frames/subscriber.png' : 'frames/follower.png', 'Frame');
+  frame.hide();
+
+  document.documentElement.style.setProperty('--theme', status ? '#ff970e' : '#00B3DC');
+  document.documentElement.style.setProperty('--theme-hover', status ? '#ff9f20' : '#1EC8EE');
+}
+
+function handleFileInput(file) {
+  userProfilePicture.picture = file.type === 'image' ? createImg(file.data, '') : null;
+  userProfilePicture.picture.hide();
+}
+
+function saveEditedPicture() {
+  pg.save('poncikbruiser.png');
 }

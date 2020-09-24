@@ -8,11 +8,37 @@
     <title>poncikbruiser Çerçeve</title>
   </head>
   <body>
-    <main id="main">
-      <div id="controls">
-        <label for="userProfilePicture">Fotoğraf Seçmek İçin Tıklayın</label>
+    <div class="wrapper">
+      <div class="card">
+        <header>
+          <span>poncikbruiser</span>
+          Savaşçı Çerçevesi
+        </header>
+        <main>
+          <div class="control">
+            <div id="fileInputContainer" class="inputgroup dark">
+              <!-- <input type="file" name="fileInput" id="fileInput" /> -->
+            </div>
+            <div class="helper">
+              jpg, png formatlarındaki dosyaları seçebilirsiniz.
+            </div>
+          </div>
+          <div class="control">
+            <div class="inputgroup">
+              <label for="useSubFrame">Abone çerçevesini kullan</label>
+              <input
+                type="checkbox"
+                name="useSubFrame"
+                id="useSubFrame"
+                onchange="changeFrame(this.checked)"
+              />
+            </div>
+          </div>
+          <div id="canvasContainer"></div>
+          <button onclick="saveEditedPicture()">Resmi İndir</button>
+        </main>
       </div>
-    </main>
+    </div>
     <script src="sketch.js"></script>
   </body>
 </html>

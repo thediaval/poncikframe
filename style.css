@@ -1,38 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
-* {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+:root {
+  --theme: #00B3DC;
+  --theme-hover: #1ec8ee;
 }
 
-html,
-body {
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+html, body {
   margin: 0;
   padding: 0;
-  background-color: #30343f;
+  background-color: #FAFAFA;
 }
 
-body,
-#main {
+body, .wrapper {
   width: 100vw;
   height: 100vh;
 }
 
-canvas {
-  border: 20px solid rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-#main {
-  position: relative;
+.wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -41,8 +31,7 @@ canvas {
           justify-content: center;
 }
 
-#controls {
-  position: absolute;
+.card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -50,120 +39,106 @@ canvas {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 6px;
-  margin-bottom: 30px;
-  width: 30vw;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
-}
-
-button {
-  margin: 0;
-  padding: 6px 20px;
+  padding: 30px;
+  border-radius: 15px;
   border: none;
-  border-radius: 20px;
-  background-color: #0e0e0e;
-  font-weight: 600;
-  font-size: 16px;
-  color: #ffcc00;
-  cursor: pointer;
-  -webkit-transition: background-color 250ms ease;
-  transition: background-color 250ms ease;
+  background-color: #ffffff;
+  max-width: 350px;
+  -webkit-box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.2);
 }
 
-button:hover {
-  background-color: #000;
-}
-
-label[for="userProfilePicture"] {
-  display: block;
-  margin: 0;
-  padding: 6px 20px;
-  border: none;
-  border-radius: 20px;
-  background-color: #0e0e0e;
-  font-weight: 500;
-  font-size: 16px;
-  color: #fff;
-  cursor: pointer;
-  -webkit-transition: background-color 250ms ease;
-  transition: background-color 250ms ease;
+.card header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-size: 18px;
   text-align: center;
 }
 
-label[for="userProfilePicture"]:hover {
-  background-color: #000;
+.card header span {
+  font-weight: 500;
 }
 
-input[type="checkbox"] {
-  display: none;
+.card main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 30px 0 0 0;
+  font-size: 14px;
 }
 
-input[type="checkbox"] + label {
+.card main .control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.card main .control .inputgroup {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  position: relative;
-  margin: 15px 0;
-  color: #fff;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: #F3F3F3;
+  color: #000;
+}
+
+.card main .control .inputgroup.dark {
+  background-color: #1D1D1D;
+  color: #FFF;
+}
+
+.card main .control .inputgroup label {
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
 }
 
-input[type="checkbox"] + label:after {
-  content: '';
-  position: absolute;
-  left: 16px;
-  top: 50%;
+.card main .control .helper {
   display: block;
-  margin-right: 10px;
-  width: 25px;
-  height: 25px;
+  text-align: right;
+  font-size: 13px;
+  color: #777777;
+}
+
+.card main button {
+  border: none;
+  margin: 25px 0 0 0;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: var(--theme);
+  color: #000;
+  cursor: pointer;
+}
+
+.card main button:hover {
+  background-color: var(--theme-hover);
+  color: #000;
+}
+
+.card main #canvasContainer canvas {
   border-radius: 50%;
-  background-color: #00b3dc;
-  -webkit-transition: all 250ms ease;
-  transition: all 250ms ease;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-}
-
-input[type="checkbox"] + label:before {
-  content: '';
-  position: relative;
-  display: block;
-  margin-right: 10px;
-  width: 55px;
-  height: 31px;
-  border-radius: 20px;
-  background-color: #0e0e0e;
-  -webkit-transition: background-color 250ms ease;
-  transition: background-color 250ms ease;
-}
-
-input[type="checkbox"] + label:hover:before {
-  background-color: #000;
-}
-
-input[type="checkbox"]:checked + label:after {
-  content: '';
-  position: absolute;
-  left: 39px;
-  display: block;
-  margin-right: 10px;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background-color: #ff9000;
-}
-
-#userProfilePicture {
-  display: none;
 }
 /*# sourceMappingURL=style.css.map */
